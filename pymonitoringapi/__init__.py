@@ -65,8 +65,10 @@ class MonitoringAPI:
         if self.client is None:
             raise NoApiClassFoundException(base_url)
 
-        # move ALL of the above stuff to each class under APIs/
-        # we need to dynamically load each of the classes under APIs/, 
-        # and run their _matches_current_server() methods, waiting
-        # for one of them to return True. 
-        # if none of them do, we raise an Exception.
+    def get_client(self):
+        """
+        Gets the client API class for the detected server.
+
+        returns a reference to an APIs. class
+        """
+        return self.client

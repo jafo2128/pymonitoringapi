@@ -10,6 +10,8 @@ class BaseAPI:
     Base class for all monitoring system clients (Nagios/Icinga/etc.) API classes.
     """
 
+    classname = __name__
+
     def __init__(self, base_url, username, password, cgipath='cgi-bin/'):
         """
         Initialize, set class variables, try a HTTP login, and check
@@ -35,13 +37,21 @@ class BaseAPI:
         """
         return False
 
-    def get_version(self):
+    def get_major_version(self):
         """
-        Return the monitoring system version that this class supports.
+        Return the major version of the monitoring server.
 
-        return string, version of supported monitoring system.
+        return integer, major version of monitoring system.
         """
-        return self.system_version
+        return self.system_major_version
+
+    def get_full_version(self):
+        """
+        Return the full version of the monitoring server.
+
+        return string, full version of monitoring system.
+        """
+        return self.system_full_version
 
     def get_system_name(self):
         """

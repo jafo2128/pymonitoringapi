@@ -4,6 +4,7 @@ Nagios3 web-scraping client class.
 
 import requests
 from baseapi import BaseAPI
+import re
 
 class Nagios3(BaseAPI):
     """
@@ -11,7 +12,9 @@ class Nagios3(BaseAPI):
     """
 
     system_name = "nagios"
-    system_version = "3"
+    system_major_version = 3 # this class only supports Nagios3
+    system_full_version = None
+    classname = __name__
 
     def __init__(self, base_url, username, password, cgipath='cgi-bin/'):
         """
@@ -34,37 +37,19 @@ class Nagios3(BaseAPI):
 
     def _is_matching_server(self):
         """
-        Check the main page on the server, see if it's Nagios3.
+        Check the main page on the server, see if it's Nagios3 (and therefore supported by this class).
 
         return True if we match, False otherwise.
         """
         content = self._get_page_content(self.base_url + "/main.php")
-        print content
 
-
-        """
-@TODO - we should get back HTML page content that tells us the monitoring
-system and version. i.e. we can look for substrings (or parse the HTML):
-
-Nagios Core 3.3.1:
-
-<div id="currentversioninfo">
-<div class="product">Nagios<sup><span style="font-size: small;">&reg;</span></sup> Core<sup><span style="font-size: small;">&trade;</span></sup></div>
-<div class="version">Version 3.3.1</div>
-<div class="releasedate">July 25, 2011</div>
-<div class="checkforupdates"><a href="http://www.nagios.org/checkforupdates/?version=3.3.1&product=nagioscore" target="_blank">Check for updates</a></div>
-<!--<div class="whatsnew"><a href="http://go.nagios.com/nagioscore/whatsnew">Read what's new in Nagios Core 3</a></div>-->
-</div>
-
-Icinga 1.8.4:
-<TITLE>Icinga</TITLE>
-
-...
-
-<div id="currentversioninfo">
-<div class="version">Version 1.8.4</div>
-<div class="releasedate">January 13, 2013</div>
-<div class="whatsnew"><a href="docs/en/whatsnew.html">Read what's new in Icinga 1.8.4</a></div>
-</div>
-
-"""
+        # we could use BeautifulSoup, but it's not really worth it here...
+        if re.search(r'<div class="product">Nagios', content):
+            # yup, it's nagios
+            foo = re.search('<div class="version">Version (3\.(\d\.\d))</div>', content)
+            if foo:
+                self.system_full_version = foo.groups(0)[0]
+                return True
+            else:
+                return False
+        return False

@@ -5,6 +5,8 @@ PasswordAuthException
 HTTP404Exception
 OtherHTTPException
 NoApiClassFoundException
+APItoServerMismatch
+MethodNotImplementedException
 """
 
 class PasswordAuthException(Exception):
@@ -85,3 +87,20 @@ class APItoServerMismatch(Exception):
 
     def __str__(self):
         return repr(self.url + self.classname)
+
+class MethodNotImplementedException(Exception):
+    """
+    Exception raised when we try to call a method that
+    a specific API client does not implement.
+
+    Attributes:
+        method   -- the name of the method called
+        apiclass -- the name of the API class in use
+    """
+
+    def __init__(self, method, apiclass):
+        self.method = method
+        self.apiclass = apiclass
+
+    def __str__(self):
+        return repr(self.method + self.apiclass)

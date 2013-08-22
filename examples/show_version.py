@@ -16,8 +16,11 @@ from pymonitoringapi import MonitoringAPI
 VERBOSE = False
 
 def show_server_ver(user, password, url, cgibin):
-    client = MonitoringAPI(url, user, password, cgibin)
-    print client
+    mon = MonitoringAPI(url, user, password, cgibin)
+    client = mon.get_client()
+
+    print "Got a client for %s%d (%s) connected to %s %s at %s" % (client.system_name, client.system_major_version, client.classname, client.system_name, client.system_full_version, client.base_url)
+
 
 if __name__ == "__main__":
     parser = optparse.OptionParser()
