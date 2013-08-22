@@ -3,7 +3,8 @@ Base class for all monitoring system clients (Nagios/Icinga/etc.) API classes.
 """
 
 import requests
-from exceptions import *
+from pymonitoringapi.exceptions import *
+from pymonitoringapi import constants
 
 class BaseAPI:
     """
@@ -61,16 +62,26 @@ class BaseAPI:
         """
         return self.system_name
 
-    def _get_page_content(self, url):
+    def _get_page_content(self, url, method='get', req_params=None):
         """
         Gets the content of a url over HTTP.
+
+        @param url string the URL to get
+        @param method "get" or "post", method to use, default 'get'
+        @param dict req_params request parameters
 
         Raises:
             PasswordAuthException -- when we get a HTTP 401
             HTTP404Exception      -- when we get a HTTP 404
             OtherHTTPException    -- when we get another non-200 HTTP code
         """
-        res = requests.get(url, auth=(self.username, self.password))
+        if method == "get":
+            res = requests.get(url, auth=(self.username, self.password), params=req_params)
+        elif method == "post":
+            res = requests.post(url, auth=(self.username, self.password), params=req_params)
+        else:
+            print "not implemented" # TODO fix this
+            return None
         if res.status_code == 200:
             return res.content
         if res.status_code == 401:

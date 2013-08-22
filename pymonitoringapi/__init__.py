@@ -4,6 +4,7 @@ MonitoringAPI class.
 
 import requests
 from exceptions import *
+import constants
 
 __version__ = '0.0.1'
 

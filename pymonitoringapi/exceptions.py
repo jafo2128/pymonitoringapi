@@ -104,3 +104,18 @@ class MethodNotImplementedException(Exception):
 
     def __str__(self):
         return repr(self.method + self.apiclass)
+
+class PermissionsException(Exception):
+    """
+    Exception raised when the current user doesn't have permissions to
+    perform the requested API/Web UI operation.
+
+    Attributes:
+        obj -- the object that we don't have permissions for
+    """
+
+    def __init__(self, obj):
+        self.obj = obj
+
+    def __str__(self):
+        return repr(self.obj)
