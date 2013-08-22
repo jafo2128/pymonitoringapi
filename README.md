@@ -1,7 +1,7 @@
-python-nagios-api
+pynagiosapi
 =================
 
-python-nagios-api is a Python module to interact with Nagios and Icinga over
+pynagiosapi is a Python module to interact with Nagios and Icinga over
 the web. It is intended to handle most of the Web UI actions that would
 commonly be triggered from within a script, i.e. enable/disable notifications
 or checks, schedule and delete downtime, check host or service status, etc.
