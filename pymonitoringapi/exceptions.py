@@ -1,5 +1,5 @@
 """
-All pynagiosapi exceptions.
+All pymonitoringapi exceptions.
 
 PasswordAuthException
 HTTP404Exception

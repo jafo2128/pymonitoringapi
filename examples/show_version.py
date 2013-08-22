@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-python-nagios-api example script to find the server type
+pymonitoringapi example script to find the server type
 and version of our monitoring server.
 """
 
@@ -11,7 +11,7 @@ import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")))
 
-from pynagiosapi import NagiosAPI
+from pymonitoringapi import NagiosAPI
 
 VERBOSE = False
 

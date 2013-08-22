@@ -1,9 +1,11 @@
-pynagiosapi
+pymonitoringapi
 =================
 
-pynagiosapi is a Python module to interact with Nagios and Icinga over
-the web. It is intended to handle most of the Web UI actions that would
-commonly be triggered from within a script, i.e. enable/disable notifications
+pymonitoringapi is a Python module to interact with and abstract the APIs of common
+monitoring systems (currently targeted at Nagios and Icinga, but can be
+expanded for anything with the same paradigms) the web. It is intended 
+to handle most of the Web UI or API actions that would commonly be 
+triggered from within a script, i.e. enable/disable notifications
 or checks, schedule and delete downtime, check host or service status, etc.
 
 For Nagios, this module uses BeautifulSoup to parse the HTML of the web
@@ -39,7 +41,7 @@ Examples
 License
 -------
 
-python-nagios-api is licensed under the [LGPL
+pymonitoringapi is licensed under the [LGPL
 v3](http://www.gnu.org/licenses/lgpl.html). You can view the text of the
 license in the LICENSE file.
 

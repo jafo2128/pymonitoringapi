@@ -1,5 +1,5 @@
 """
-NagiosAPI class.
+MonitoringAPI class.
 """
 
 import requests
@@ -7,9 +7,9 @@ from exceptions import *
 
 __version__ = '0.0.1'
 
-class NagiosAPI:
+class MonitoringAPI:
     """
-    NagiosAPI is the main class instantiated by applications.
+    MonitoringAPI is the main class instantiated by applications.
 
     It handles connection to the Nagios/Icinga/etc. instance, detection
     of the server type and version, and returning the appropriate object.
@@ -27,7 +27,7 @@ class NagiosAPI:
 
     def __init__(self, base_url, username, password, cgipath='cgi-bin/', api_class=None):
         """
-        Initialize NagiosAPI. Try to instantiate each of the APIs/ classes
+        Initialize MonitoringAPI. Try to instantiate each of the APIs/ classes
         (listed in self.API_CLASSES) and get one that "claims" the specified
         server. Else, raise an exception.
 
@@ -38,7 +38,7 @@ class NagiosAPI:
           cgi-bin directory. Default is "nagios/cgi-bin/"
         @param api_class string (optional) the name of the API class to use for this server.
         If not specified, will test each available class at object creation time until a
-        match is found. See pynagiosapi/__init__.py for available options.
+        match is found. See pymonitoringapi/__init__.py for available options.
         """
 
         # if we were called with api_class, only try that API class
@@ -49,7 +49,7 @@ class NagiosAPI:
         for modname in self.API_CLASSES:
             # try to import the module
             try:
-                mod = __import__("pynagiosapi.APIs." + modname.lower(), fromlist=[modname])
+                mod = __import__("pymonitoringapi.APIs." + modname.lower(), fromlist=[modname])
                 client_class = getattr(mod, modname)
             except:
                 print "Couldn't import module %s" % modname # DEBUG LOG
