@@ -11,12 +11,12 @@ import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")))
 
-from pymonitoringapi import NagiosAPI
+from pymonitoringapi import MonitoringAPI
 
 VERBOSE = False
 
 def show_server_ver(user, password, url, cgibin):
-    client = NagiosAPI(url, user, password, cgibin)
+    client = MonitoringAPI(url, user, password, cgibin)
     print client
 
 if __name__ == "__main__":
