@@ -41,6 +41,44 @@ Examples
 
     Something will go here...
 
+Development
+-----------
+
+Issues/bugs are happily accepted on the tracker at https://github.com/jantman/pymonitoringapi/issues
+
+Patches are happily accepted as Pull Requests on github. Before you submit a PR, please make sure:
+* you've rebased against the latest version of the branch you're developing against (should currently be master)
+* your new code (if any) has tests
+* all tests pass
+* coverage report (see below) is at least as good as when you started
+* pep8 tests succeed
+
+Testing
+-------
+
+Testing is currently done via py.test.
+
+To get ready for testing:
+```
+pip install pytest pytest-cov pytest-cache pytest-pep8
+```
+
+To run the tests:
+```
+py.test
+```
+
+To run code coverage tests:
+```
+py.test --cov-report term-missing --cov=. tests/
+```
+
+To check pep8 compliance:
+```
+py.test --pep8
+```
+
+
 License
 -------
 
