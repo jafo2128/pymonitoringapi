@@ -9,6 +9,7 @@ import datetime
 
 sys.path.insert(0, os.path.abspath(os.path.dirname(os.path.abspath(__file__)) + '/../../'))
 from pymonitoringapi.APIs.nagios3 import Nagios3
+from pymonitoringapi.exceptions import APItoServerMismatch
 
 class TestAPIsNagios3:
     """
@@ -74,3 +75,36 @@ class TestAPIsNagios3:
         api = Nagios3('http://nagios.example.com/nagios', 'username', 'password')
         svcinfo = api.get_service_information(host, service)
         assert svcinfo == ret_dict
+
+    # @TODO - this should be a mock or monkeypatch?
+    def page_return_empty_string(self, url, method='get', req_params=None):
+        """
+        return an empty string for a get_page_contents call
+        """
+        return ""
+
+    def page_nagios_only(self, url, method='get', req_params=None):
+        """
+        return just the Nagios product div
+        """
+        return ' <div class="product">Nagios</div>'
+
+
+    def test_non_matching_server(self):
+        """
+        Tests the Nagios3.__init__() exception raised when server doesn't match
+        """
+        Nagios3._get_page_content = self.page_return_empty_string
+        with pytest.raises(APItoServerMismatch) as excinfo:
+            api = Nagios3('http://nagios.example.com/nagios', 'username', 'password')
+        assert excinfo.type == APItoServerMismatch
+
+    def test_non_matching_version(self):
+        """
+        Tests the Nagios3.__init__() exception raised when server doesn't match,
+        on a page that looks like Nagios but not Nagios3
+        """
+        Nagios3._get_page_content = self.page_nagios_only
+        with pytest.raises(APItoServerMismatch) as excinfo:
+            api = Nagios3('http://nagios.example.com/nagios', 'username', 'password')
+        assert excinfo.type == APItoServerMismatch
