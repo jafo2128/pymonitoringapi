@@ -1,3 +1,6 @@
+This project is NOT working or ready for use yet!
+=================================================
+
 pymonitoringapi
 =================
 
